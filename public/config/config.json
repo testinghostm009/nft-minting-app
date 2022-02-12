@@ -1,16 +1,16 @@
 {
-  "CONTRACT_ADDRESS": "0x0b18b900F7375AABDa00EEaC988116C33fb05BD2",
-  "SCAN_LINK": "https://polygonscan.com/token/0x0b18b900F7375AABDa00EEaC988116C33fb05BD2",
+  "CONTRACT_ADDRESS": "0x3f9DB9d306Bb3eeCfdfbe57341447f05C6Ece39d",
+  "SCAN_LINK": "https://rinkeby.etherscan.io/address/0x3f9DB9d306Bb3eeCfdfbe57341447f05C6Ece39d",
   "NETWORK": {
-    "NAME": "Polygon",
-    "SYMBOL": "Matic",
-    "ID": 137
+    "NAME": "Rinkeby",
+    "SYMBOL": "TESTETH",
+    "ID": 4
   },
-  "NFT_NAME": "The Stripes NFT",
+  "NFT_NAME": "VEENFT",
   "SYMBOL": "TSNFT",
-  "MAX_SUPPLY": 992,
-  "WEI_COST": 4000000000000000000,
-  "DISPLAY_COST": 4,
+  "MAX_SUPPLY": 5000,
+  "WEI_COST": 3000000000000000,
+  "DISPLAY_COST": 0.03,
   "GAS_LIMIT": 285000,
   "MARKETPLACE": "Opeansea",
   "MARKETPLACE_LINK": "https://opensea.io/collection/the-stripes-nft",
