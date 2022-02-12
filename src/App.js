@@ -4,6 +4,9 @@ import { connect } from "./redux/blockchain/blockchainActions";
 import { fetchData } from "./redux/data/dataActions";
 import * as s from "./styles/globalStyles";
 import styled from "styled-components";
+import OwlCarousel from 'react-owl-carousel';  
+import 'owl.carousel/dist/assets/owl.carousel.css';  
+import 'owl.carousel/dist/assets/owl.theme.default.css';  
 
 const truncate = (input, len) =>
   input.length > len ? `${input.substring(0, len)}...` : input;
@@ -66,9 +69,9 @@ export const ResponsiveWrapper = styled.div`
 `;
 
 export const StyledLogo = styled.img`
-  width: 200px;
+  width: 100px;
   @media (min-width: 767px) {
-    width: 300px;
+    width: 150px;
   }
   transition: width 0.5s;
   transition: height 0.5s;
@@ -81,10 +84,10 @@ export const StyledImg = styled.img`
   border-radius: 100%;
   width: 200px;
   @media (min-width: 900px) {
-    width: 250px;
+    width: 300px;
   }
   @media (min-width: 1000px) {
-    width: 300px;
+    width: 350px;
   }
   transition: width 0.5s;
 `;
@@ -130,7 +133,7 @@ function App() {
     setFeedback(`Minting your ${CONFIG.NFT_NAME}...`);
     setClaimingNft(true);
     blockchain.smartContract.methods
-      .mint(blockchain.account, mintAmount)
+      .mint(mintAmount)
       .send({
         gasLimit: String(totalGasLimit),
         to: CONFIG.CONTRACT_ADDRESS,
@@ -162,8 +165,8 @@ function App() {
 
   const incrementMintAmount = () => {
     let newMintAmount = mintAmount + 1;
-    if (newMintAmount > 50) {
-      newMintAmount = 50;
+    if (newMintAmount > 10) {
+      newMintAmount = 10;
     }
     setMintAmount(newMintAmount);
   };
@@ -185,6 +188,15 @@ function App() {
     SET_CONFIG(config);
   };
 
+  const [matches,setMatches] = React.useState(window.matchMedia("(min-width: 768px)").matches)
+
+  React.useEffect(() => {
+      const handler = e => setMatches(e.matches);
+      window.matchMedia("(min-width: 768px)").addEventListener('change', handler)
+      window.scrollTo(0,0)
+  },[])
+
+
   useEffect(() => {
     getConfig();
   }, []);
@@ -199,19 +211,17 @@ function App() {
         flex={1}
         ai={"center"}
         style={{ padding: 24, backgroundColor: "var(--primary)" }}
-        image={CONFIG.SHOW_BACKGROUND ? "/config/images/bg.png" : null}
+        image={CONFIG.SHOW_BACKGROUND ? "/config/images/banner-bg.jpeg" : null}
       >
-        <a href={CONFIG.MARKETPLACE_LINK}>
-          <StyledLogo alt={"logo"} src={"/config/images/logo.png"} />
-        </a>
+        <StyledLogo alt={"logo"} src={"/config/images/logo.jpeg"} />
         <s.SpacerSmall />
         <ResponsiveWrapper flex={1} style={{ padding: 24 }} test>
-          <s.Container flex={1} jc={"center"} ai={"center"}>
+          <s.Container flex={2} jc={"center"} ai={"center"}>
             <StyledImg alt={"example"} src={"/config/images/example.gif"} />
           </s.Container>
           <s.SpacerLarge />
           <s.Container
-            flex={2}
+            flex={10}
             jc={"center"}
             ai={"center"}
             style={{
@@ -242,32 +252,6 @@ function App() {
                 {truncate(CONFIG.CONTRACT_ADDRESS, 15)}
               </StyledLink>
             </s.TextDescription>
-            <span
-              style={{
-                textAlign: "center",
-              }}
-            >
-              <StyledButton
-                onClick={(e) => {
-                  window.open("/config/roadmap.pdf", "_blank");
-                }}
-                style={{
-                  margin: "5px",
-                }}
-              >
-                Roadmap
-              </StyledButton>
-              <StyledButton
-                style={{
-                  margin: "5px",
-                }}
-                onClick={(e) => {
-                  window.open(CONFIG.MARKETPLACE_LINK, "_blank");
-                }}
-              >
-                {CONFIG.MARKETPLACE}
-              </StyledButton>
-            </span>
             <s.SpacerSmall />
             {Number(data.totalSupply) >= CONFIG.MAX_SUPPLY ? (
               <>
@@ -399,16 +383,16 @@ function App() {
           </s.Container>
           <s.SpacerLarge />
           <s.Container flex={1} jc={"center"} ai={"center"}>
-            <StyledImg
+            {/* <StyledImg
               alt={"example"}
               src={"/config/images/example.gif"}
               style={{ transform: "scaleX(-1)" }}
-            />
+            /> */}
           </s.Container>
         </ResponsiveWrapper>
         <s.SpacerMedium />
         <s.Container jc={"center"} ai={"center"} style={{ width: "70%" }}>
-          <s.TextDescription
+          {/* <s.TextDescription
             style={{
               textAlign: "center",
               color: "var(--primary-text)",
@@ -417,9 +401,9 @@ function App() {
             Please make sure you are connected to the right network (
             {CONFIG.NETWORK.NAME} Mainnet) and the correct address. Please note:
             Once you make the purchase, you cannot undo this action.
-          </s.TextDescription>
+          </s.TextDescription> */}
           <s.SpacerSmall />
-          <s.TextDescription
+          {/* <s.TextDescription
             style={{
               textAlign: "center",
               color: "var(--primary-text)",
@@ -428,8 +412,44 @@ function App() {
             We have set the gas limit to {CONFIG.GAS_LIMIT} for the contract to
             successfully mint your NFT. We recommend that you don't lower the
             gas limit.
-          </s.TextDescription>
+          </s.TextDescription> */}
         </s.Container>
+        <div class="container slider" style={{padding: "0vw 0vw"}}>
+          <OwlCarousel items={matches == false ? 2 : 5}  
+              className="owl-theme"  
+              loop={true}
+              autoplay={true}
+              nav
+              margin={8} >  
+              <div>
+                <img  className="img" src= {"slider.jpeg"} style={{borderRadius:'15px',border:'2px solid #000'}}/>
+              </div>
+              <div>
+                <img  className="img" src= {"slider.jpeg"} style={{borderRadius:'15px',border:'2px solid #000'}}/>
+              </div>
+              <div>
+                <img  className="img" src= {"slider.jpeg"} style={{borderRadius:'15px',border:'2px solid #000'}}/>
+              </div>
+              <div>
+                <img  className="img" src= {"slider.jpeg"} style={{borderRadius:'15px',border:'2px solid #000'}}/>
+              </div>
+              <div>
+                <img  className="img" src= {"slider.jpeg"} style={{borderRadius:'15px',border:'2px solid #000'}}/>
+              </div>
+              <div>
+                <img  className="img" src= {"slider.jpeg"} style={{borderRadius:'15px',border:'2px solid #000'}}/>
+              </div>
+              <div>
+                <img  className="img" src= {"slider.jpeg"} style={{borderRadius:'15px',border:'2px solid #000'}}/>
+              </div>
+              <div>
+                <img  className="img" src= {"slider.jpeg"} style={{borderRadius:'15px',border:'2px solid #000'}}/>
+              </div>
+              <div>
+                <img  className="img" src= {"slider.jpeg"} style={{borderRadius:'15px',border:'2px solid #000'}}/>
+              </div>
+          </OwlCarousel>  
+        </div>
       </s.Container>
     </s.Screen>
   );
